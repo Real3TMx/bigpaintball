@@ -1,89 +1,163 @@
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local TextLabel = Instance.new("TextLabel")
-local TextButton = Instance.new("TextButton")
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/vozoid/ui-libraries/main/drawing/void/source.lua"))()
 
---Properties:
+local watermark = library:Watermark("Wannabe Hub | v.1 | ESAN")
 
-ScreenGui.Parent = game.CoreGui
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+local main = library:Load{
+    Name = "CouterN Hub | [NEW] Classroom Simulator",
+    SizeX = 600,
+    SizeY = 650,
+    Theme = "Midnight",
+    Extension = "json", -- config file extension
+    Folder = "vozoid ui or something" -- config folder name
+}
 
-Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Frame.Position = UDim2.new(0.14743112, 0, 0.332923859, 0)
-Frame.Size = UDim2.new(0, 139, 0, 162)
+-- values
+_G.autoCollect= true
+_G.autoProcess = true
+_G.auto1Student = true
+_G.auto5Student = true
+_G.autoRate = true
 
-TextLabel.Parent = Frame
-TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.Size = UDim2.new(0, 139, 0, 40)
-TextLabel.Font = Enum.Font.SourceSans
-TextLabel.Text = "Chams Tut"
-TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel.TextScaled = true
-TextLabel.TextSize = 14.000
-TextLabel.TextWrapped = true
-
-TextButton.Parent = Frame
-TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextButton.Position = UDim2.new(0, 0, 0.493827164, 0)
-TextButton.Size = UDim2.new(0, 139, 0, 50)
-TextButton.Font = Enum.Font.SourceSans
-TextButton.Text = "Off"
-TextButton.TextColor3 = Color3.fromRGB(170, 0, 0)
-TextButton.TextScaled = true
-TextButton.TextSize = 14.000
-TextButton.TextWrapped = true
-
--- Scripts:
-
-local function QHDX_fake_script() -- TextButton.LocalScript 
-	local script = Instance.new('LocalScript', TextButton)
-
-	_G.chams = false
-	local Players = game:GetService("Players") -- variable to get the players in the game
-	
-	script.Parent.MouseButton1Click:Connect(function()
-		if _G.chams == false then
-			_G.chams = true
-			script.Parent.Text = "On"
-			script.Parent.TextColor3 = Color3.fromRGB(0, 255, 0)
-			--- Chams
-			function CreateGui(name,parent,face) -- function that creates the Chams
-				local SurfaceGui = Instance.new("SurfaceGui",parent) --- Creates a SurfaceGui in the game
-				SurfaceGui.Parent = parent
-				SurfaceGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-				SurfaceGui.Face = Enum.NormalId[face]
-				SurfaceGui.LightInfluence = 0
-				SurfaceGui.ResetOnSpawn = false
-				SurfaceGui.Name = name
-				SurfaceGui.AlwaysOnTop = true
-				local Frame = Instance.new("Frame",SurfaceGui)
-				Frame.BackgroundColor3 = Color3.fromRGB(85, 170, 255) -- colour for the surfacgui
-				Frame.Size = UDim2.new(1,0,1,0)
-			end
-			
-			while wait(1) do
-				for i,v in pairs (Players:GetPlayers()) do --- gets all the players in the game and loops through them
-					if v ~= Players.LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("Head") and _G.chams and v.Character.Head:FindFirstChild("cham") == nil then --- Checks to check if the player is appropiate to make a cham
-						for i,v in pairs (v.Character:GetChildren()) do -- looping through every child in the character of the player
-							if v:IsA("MeshPart") or v.Name == "Head" then -- checking if the child is a body part
-								CreateGui("cham",v,"Back")
-								CreateGui("cham",v,"Front")
-								CreateGui("cham",v,"Top")
-								CreateGui("cham",v,"Bottom")
-								CreateGui("cham",v,"Right")
-								CreateGui("cham",v,"Left")
-							end
-						end
-						
-					end
-				end
-			end
-		else 
-			_G.chams = false
-			script.Parent.Text = "Off"
-			script.Parent.TextColor3 = Color3.fromRGB(255, 0, 0)
-		end
-	end)
+--Func
+function autoCollect()
+    while _G.autoCollect == true do
+        game:GetService("ReplicatedStorage").Remotes.Gameplay.DropEvent:FireServer(1)
+        wait(.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+    end
 end
-coroutine.wrap(QHDX_fake_script)()
+
+function autoProcess()
+    while _G.autoProcess == true do
+        game:GetService("ReplicatedStorage").Remotes.Gameplay.ProcessEvent:FireServer()
+        wait(.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+    end
+end
+
+function auto1Student()
+    while _G.auto1Student == true do
+        game:GetService("ReplicatedStorage").Remotes.Gameplay.AddDropperEvent:FireServer()
+        wait(.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+    end
+end
+
+function auto5Student()
+    while _G.auto5Student == true do
+        game:GetService("ReplicatedStorage").Remotes.Gameplay.AddDropper5Event:FireServer()
+        wait(.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+    end
+end
+
+function autoRate()
+    while _G.autoRate == true do
+        game:GetService("ReplicatedStorage").Remotes.Gameplay.RateUpEvent:FireServer()
+        wait(.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
+    end
+end
+
+
+local tab = main:Tab("Main Page")
+
+local section = tab:Section{
+    Name = "Auto Farm",
+    Side = "Left"
+}
+
+local plrsection = tab:Section{
+    Name = "Player",
+    Side = "Right"
+}
+
+plrsection:Slider{
+    Text = "Walk Speed [value]/250",
+    --Default = 5,
+    Min = 16,
+    Max = 250,
+    Float = 1,
+    Flag = "WS",
+    Callback = function(value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+    end
+}
+
+
+local toggle = section:Toggle{
+    Name = "Auto Collect (Lag)",
+    Flag = "Toggle 1",
+    --Default = true,
+    Callback  = function(Value)
+        _G.autoCollect = Value
+        autoCollect()
+    end
+}
+
+local toggle = section:Toggle{
+    Name = "Auto Process (Lag)",
+    Flag = "Toggle 1",
+    --Default = true,
+    Callback  = function(Value)
+        _G.autoProcess = Value
+        autoProcess()
+    end
+}
+
+section:Button{
+    Name = "Process Books",
+    Callback  = function()
+        game:GetService("ReplicatedStorage").Remotes.Gameplay.ProcessEvent:FireServer()
+    end
+}
+
+local toggle = section:Toggle{
+    Name = "Auto +1 Student",
+    Flag = "Toggle 1",
+    --Default = true,
+    Callback  = function(Value)
+        _G.auto1Student = Value
+        auto1Student()
+    end
+}
+
+local toggle = section:Toggle{
+    Name = "Auto +5 Student",
+    Flag = "Toggle 1",
+    --Default = true,
+    Callback  = function(Value)
+        _G.auto5Student = Value
+        auto5Student()
+    end
+}
+
+local toggle = section:Toggle{
+    Name = "Auto + Rate",
+    Flag = "Toggle 1",
+    --Default = true,
+    Callback  = function(Value)
+        _G.autoRate = Value
+        autoRate()
+    end
+}
+
+plrsection:Keybind{
+    Name = "UI Toggle",
+    Flag = "UI Toggle",
+    Default = Enum.KeyCode.RightControl,
+    Blacklist = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2, Enum.UserInputType.MouseButton3},
+    Callback = function(_, fromsetting)
+        if not fromsetting then
+            library:Close()
+        end
+    end
+}
+
+plrsection:Keybind{
+    Name = "Destroy UI",
+    Flag = "Unload UI",
+    Default = Enum.KeyCode.B,
+    Blacklist = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2, Enum.UserInputType.MouseButton3},
+    Callback = function(_, fromsetting)
+        if not fromsetting then
+            library:Unload()
+        end
+    end
+}
+
